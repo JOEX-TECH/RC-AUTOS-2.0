@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC AUTOS | Milla de Oro Medellín - Exclusividad y Confianza</title>
+    
+    <meta name="description" content="RC AUTOS Medellín - Venta de vehículos premium en El Poblado. Financiación hasta el 100%, retomas y seguros.">
+    <meta name="keywords" content="Carros Medellin, Milla de Oro, Venta de autos, Camionetas Premium, RC Autos">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #E31E24;
+            --gold: #D4AF37;
+            --bg-dark: #050505;
+            --bg-card: #111111;
+            --text: #ffffff;
+            --text-muted: #888888;
+            --accent: #1a1a1a;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: var(--text); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+        h1, h2, h3, .font-tech { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+
+        /* LOADER PANTALLA COMPLETA */
+        #loader {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .loader-logo { width: 180px; margin-bottom: 30px; animation: pulse 1.5s infinite; }
+        .bar-container { width: 250px; height: 4px; background: #222; border-radius: 10px; overflow: hidden; }
+        .bar-fill { width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease; }
+
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); opacity: 0.7; } }
+
+        /* MUSIC PLAYER */
+        .music-control {
+            position: fixed; bottom: 110px; right: 35px; z-index: 1000;
+            background: rgba(0,0,0,0.8); border: 1px solid var(--primary);
+            padding: 12px 20px; border-radius: 50px; display: flex; align-items: center; gap: 12px;
+            backdrop-filter: blur(10px); cursor: pointer; transition: var(--transition);
+            box-shadow: 0 0 15px rgba(227, 30, 36, 0.2);
+        }
+        .music-control:hover { transform: scale(1.05); background: var(--primary); }
+        .music-control button { background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem; }
+        .music-control span { font-size: 0.65rem; font-family: 'Orbitron'; font-weight: 700; }
+
+        /* HEADER */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 30px 8%;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            transition: var(--transition);
+        }
+        header.scrolled { padding: 15px 8%; background: rgba(0,0,0,0.98); border-bottom: 1px solid #222; backdrop-filter: blur(15px); }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { color: #fff; text-decoration: none; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* HERO SECTION */
+        .hero { height: 100vh; position: relative; display: flex; align-items: center; padding: 0 8%; overflow: hidden; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, #000 40%, rgba(0,0,0,0.4) 100%); z-index: 2; pointer-events: none; }
+        .hero-video-container { position: absolute; right: 0; top: 0; width: 70%; height: 100%; z-index: 1; background: #000; }
+        .hero-video-container iframe { width: 100%; height: 130%; border: none; transform: translateY(-10%) scale(1.2); filter: grayscale(0.3) brightness(0.8); }
+
+        .hero-content { position: relative; z-index: 3; max-width: 800px; }
+        .hero-content h4 { color: var(--gold); letter-spacing: 6px; font-weight: 700; margin-bottom: 15px; }
+        .hero-content h1 { font-size: clamp(3rem, 7vw, 5rem); line-height: 1; margin-bottom: 25px; text-transform: uppercase; }
+        .hero-content span { color: var(--primary); }
+        .hero-content p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 40px; border-left: 5px solid var(--primary); padding-left: 25px; max-width: 600px; }
+
+        /* BOTONES UNIVERSALES */
+        .btn { 
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 20px 40px; border-radius: 4px; font-weight: 700; font-family: 'Orbitron';
+            font-size: 0.85rem; text-decoration: none; cursor: pointer; transition: var(--transition); border: none;
+        }
+        .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 5px 15px rgba(227, 30, 36, 0.3); }
+        .btn-primary:hover { background: #ff1e26; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(227, 30, 36, 0.5); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid #fff; margin-left: 20px; }
+        .btn-outline:hover { background: #fff; color: #000; }
+
+        /* SERVICIOS */
+        section { padding: 120px 8%; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-header h2 { font-size: 2.8rem; margin-bottom: 20px; text-transform: uppercase; }
+        .section-header div { width: 80px; height: 5px; background: var(--primary); margin: 0 auto; }
+
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-item { padding: 50px; background: var(--bg-card); border-radius: 15px; border: 1px solid #222; text-align: center; transition: var(--transition); }
+        .service-item i { font-size: 3rem; color: var(--primary); margin-bottom: 25px; }
+        .service-item h3 { margin-bottom: 15px; font-size: 1.2rem; }
+        .service-item p { color: var(--text-muted); line-height: 1.6; }
+        .service-item:hover { border-color: var(--primary); transform: translateY(-10px); background: #161616; }
+
+        /* INVENTARIO Y SIMULADOR MEJORADO */
+        .inventory-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 40px; }
+        .car-card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid #222; transition: var(--transition); }
+        .car-card:hover { border-color: var(--primary); transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .car-img-container { height: 260px; overflow: hidden; position: relative; }
+        .car-img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
+        
+        .car-info { padding: 35px; }
+        .car-price { font-size: 2rem; color: var(--primary); font-weight: 700; margin-bottom: 20px; font-family: 'Orbitron'; }
+        
+        .finance-box { background: #080808; padding: 25px; border-radius: 12px; margin: 20px 0; border: 1px solid #1a1a1a; }
+        .finance-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; font-family: 'Orbitron'; font-weight: bold; }
+        .finance-label span.highlight { color: var(--gold); }
+        .monthly-payment { display: block; margin-top: 15px; text-align: center; color: var(--gold); font-size: 1.6rem; font-weight: 700; border-top: 1px solid #222; padding-top: 15px; font-family: 'Orbitron'; }
+
+        input[type="range"] { width: 100%; accent-color: var(--primary); height: 5px; cursor: pointer; appearance: none; background: #333; border-radius: 5px; margin-bottom: 10px; }
+
+        /* UBICACIÓN */
+        .location-container { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: center; }
+        .map-wrapper { height: 500px; border-radius: 20px; overflow: hidden; border: 1px solid #333; }
+        
+        /* FOOTER */
+        footer { padding: 100px 8% 40px; background: #020202; border-top: 1px solid #111; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 60px; }
+        .footer-logo img { height: 70px; margin-bottom: 25px; }
+        .footer-links h4 { font-family: 'Orbitron'; margin-bottom: 25px; color: var(--primary); }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: #fff; padding-left: 5px; }
+
+        /* WHATSAPP */
+        .wa-btn { position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #fff; z-index: 999; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); transition: var(--transition); }
+
+        /* MOBILE FIXES */
+        @media (max-width: 1024px) {
+            .location-container { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero-video-container { width: 100%; opacity: 0.5; }
+            .inventory-grid { grid-template-columns: 1fr; }
+            .btn { width: 100%; margin-left: 0; margin-bottom: 10px; }
+            section { padding: 80px 5%; }
+            .car-info { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="loader">
+        <h2 style="color: var(--primary); font-family: 'Orbitron'; margin-bottom: 20px;">RC AUTOS</h2>
+        <div class="bar-container"><div class="bar-fill" id="fill"></div></div>
+        <p style="margin-top: 15px; font-family: 'Orbitron'; font-size: 0.6rem; letter-spacing: 3px;">CARGANDO EXPERIENCIA</p>
+    </div>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <button id="musicToggle"><i class="fas fa-play"></i></button>
+        <span id="musicText">PLAY ATMOSPHERE</span>
+    </div>
+
+    <a href="https://wa.me/573043741941" class="wa-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <header id="mainHeader">
+        <div style="font-family: 'Orbitron'; font-weight: 700; color: #fff; font-size: 1.2rem;">RC <span style="color:var(--primary)">AUTOS</span></div>
+        <nav class="nav-links">
+            <a href="#home">INICIO</a>
+            <a href="#inventory">INVENTARIO</a>
+            <a href="#services">SERVICIOS</a>
+            <a href="#location">UBICACIÓN</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-video-container">
+            <iframe src="https://www.instagram.com/p/DWIQwbEjEyR/embed/" scrolling="no"></iframe>
+        </div>
+        
+        <div class="hero-content animate__animated animate__fadeInLeft">
+            <h4>MILLA DE ORO | MEDELLÍN</h4>
+            <h1>MÁS QUE AUTOS,<br><span>ESTILO DE VIDA</span></h1>
+            <p>En RC AUTOS redefinimos la compra de vehículos. Transparencia absoluta y exclusividad en cada detalle.</p>
+            <div class="hero-btns">
+                <a href="#inventory" class="btn btn-primary">VER INVENTARIO</a>
+                <a href="https://wa.me/573043741941" class="btn btn-outline">CONTACTAR ASESOR</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="section-header">
+            <h2>NUESTROS <span>SERVICIOS</span></h2>
+            <div></div>
+        </div>
+        <div class="services-grid">
+            <div class="service-item">
+                <i class="fas fa-hand-holding-usd"></i>
+                <h3>Financiación</h3>
+                <p>Simulación inmediata y aprobación en tiempo récord con aliados bancarios premium.</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-exchange-alt"></i>
+                <h3>Retomas</h3>
+                <p>Valoramos tu vehículo usado como parte de pago con el mejor precio del mercado.</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Seguros</h3>
+                <p>Protección total para tu inversión con pólizas a medida y respaldo global.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="inventory" style="background: #080808;">
+        <div class="section-header">
+            <h2>STOCK <span>PREMIUM</span></h2>
+            <p style="color: var(--text-muted); margin-top: 15px;">Selección exclusiva disponible para entrega inmediata.</p>
+            <div style="margin-top: 20px;"></div>
+        </div>
+        <div class="inventory-grid" id="carGrid"></div>
+    </section>
+
+    <section id="location">
+        <div class="section-header">
+            <h2>DÓNDE <span>ESTAMOS</span></h2>
+            <div></div>
+        </div>
+        <div class="location-container">
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.3312!2d-75.5702!3d6.2001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTInMDAuNCJOIDc1wrAzNCcMTIuNyJX!5e0!3m2!1ses!2sco!4v1650000000000" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="location-info">
+                <h3 style="color: var(--gold); margin-bottom: 25px;">VISÍTANOS EN EL POBLADO</h3>
+                <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
+                    Nuestra vitrina está ubicada en Medellín en el edificio sudameris en la Milla de Oro.
+                </p>
+                <div style="margin-bottom: 20px;">
+                    <p><strong>DIRECCIÓN:</strong></p>
+                    <p style="color: var(--text-muted);">Cra. 43A #1 SUR 100, El Poblado</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <p><strong>HORARIOS:</strong></p>
+                    <p style="color: var(--text-muted);">Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+                    <p style="color: var(--text-muted);">Sábados: 9:00 AM - 2:00 PM</p>
+                </div>
+                <a href="https://maps.app.goo.gl/medellin" target="_blank" class="btn btn-primary" style="width: 100%;">CÓMO LLEGAR</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-links">
+                <h4 style="color:#fff">RC <span style="color:var(--primary)">AUTOS</span></h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Referentes en la comercialización de vehículos de lujo y alta gama en Antioquia.</p>
+            </div>
+            <div class="footer-links">
+                <h4>MENÚ</h4>
+                <ul>
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#inventory">Inventario</a></li>
+                    <li><a href="#location">Ubicación</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>SÍGUENOS</h4>
+                <div style="display: flex; gap: 20px; font-size: 1.5rem;">
+                    <a href="https://www.instagram.com/rcautos__/" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+                <p style="margin-top: 25px; font-size: 0.8rem; color: var(--text-muted);">comercial@rcautosmedellin.com</p>
+            </div>
+        </div>
+        <div style="border-top: 1px solid #111; padding-top: 30px; text-align: center; color: #444; font-size: 0.7rem; font-family: 'Orbitron';">
+            © 2026 RC AUTOS - DESARROLLADO POR JOEX AGENCY DIGITAL
+        </div>
+    </footer>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        const musicText = document.getElementById('musicText');
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play().catch(() => alert("Interactúa con la página para activar la atmósfera"));
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                musicText.innerText = "PAUSE";
+            } else {
+                audio.pause();
+                musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+                musicText.innerText = "PLAY ATMOSPHERE";
+            }
+        }
+
+        // CONFIGURACIÓN TÉCNICA
+        const TASA_MES = 0.0153; // 20% E.A.
+        const SEGURO_MES = 120000; // Seguro estimado
+
+        const CARS = [
+            { id: 1, name: "Toyota Prado LC 150", price: 282900000, img: "https://http2.mlstatic.com/D_NQ_NP_2X_608536-MCO110041825350_042026-F.webp" },
+            { id: 2, name: "BMW X6 xDrive40i M Sport", price: 420000000, img: "https://http2.mlstatic.com/D_NQ_NP_2X_811200-MCO110389821643_042026-F.webp" },
+            { id: 3, name: "Toyota Hilux 4.0 4x4", price: 228000000, img: "https://http2.mlstatic.com/D_NQ_NP_2X_626906-MCO110993950051_042026-F.webp" },
+            { id: 4, name: "Renault Scenic 1.6 Sportway", price: 22900000, img: "https://http2.mlstatic.com/D_NQ_NP_2X_683162-MCO110757437507_042026-F.webp" }
+        ];
+
+        function formatMoney(val) {
+            return "$ " + Math.round(val).toLocaleString('es-CO');
+        }
+
+        function updateSim(id, price) {
+            const initialPercent = document.getElementById(`initial-range-${id}`).value;
+            const months = document.getElementById(`month-range-${id}`).value;
+            
+            const initialMoney = price * (initialPercent / 100);
+            const loanAmount = price - initialMoney;
+
+            // Actualizar etiquetas UI
+            document.getElementById(`label-initial-pct-${id}`).innerText = initialPercent + "%";
+            document.getElementById(`label-initial-val-${id}`).innerText = formatMoney(initialMoney);
+            document.getElementById(`label-months-${id}`).innerText = months + " meses";
+
+            let quota = 0;
+            if(loanAmount > 0) {
+                const factor = (TASA_MES * Math.pow(1 + TASA_MES, months)) / (Math.pow(1 + TASA_MES, months) - 1);
+                quota = (loanAmount * factor) + SEGURO_MES;
+            }
+
+            document.getElementById(`res-${id}`).innerText = formatMoney(quota);
+        }
+
+        function renderInventory() {
+            const grid = document.getElementById('carGrid');
+            CARS.forEach(car => {
+                const card = document.createElement('div');
+                card.className = 'car-card animate__animated animate__fadeInUp';
+                card.innerHTML = `
+                    <div class="car-img-container"><img src="${car.img}" class="car-img"></div>
+                    <div class="car-info">
+                        <h3>${car.name}</h3>
+                        <p class="car-price">${formatMoney(car.price)}</p>
+                        
+                        <div class="finance-box">
+                            <div class="finance-label">
+                                <span>CUOTA INICIAL</span>
+                                <span class="highlight" id="label-initial-pct-${car.id}">30%</span>
+                            </div>
+                            <div style="font-size:0.9rem; font-weight:700; margin-bottom:5px;" id="label-initial-val-${car.id}">${formatMoney(car.price * 0.3)}</div>
+                            <input type="range" id="initial-range-${car.id}" min="0" max="100" step="5" value="30" oninput="updateSim(${car.id}, ${car.price})">
+
+                            <div class="finance-label" style="margin-top:15px;">
+                                <span>PLAZO</span>
+                                <span class="highlight" id="label-months-${car.id}">48 meses</span>
+                            </div>
+                            <input type="range" id="month-range-${car.id}" min="12" max="72" step="12" value="48" oninput="updateSim(${car.id}, ${car.price})">
+                            
+                            <div class="finance-label" style="margin-top:15px; justify-content:center;"><span>CUOTA MENSUAL ESTIMADA</span></div>
+                            <span class="monthly-payment" id="res-${car.id}">-</span>
+                            <p style="font-size:0.5rem; color:#444; margin-top:8px; text-align:center; line-height:1.2;">
+                                TASA 20% E.A. + SEGURO ESTIMADO. SUJETO A PERFIL CREDITICIO.
+                            </p>
+                        </div>
+
+                        <a href="https://wa.me/573043741941?text=Hola, quiero financiar el ${car.name}" class="btn btn-primary" style="width:100%">SOLICITAR CRÉDITO</a>
+                    </div>`;
+                grid.appendChild(card);
+                updateSim(car.id, car.price);
+            });
+        }
+
+        window.onload = () => {
+            renderInventory();
+            const bar = document.getElementById('fill');
+            bar.style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+            }, 1000);
+        };
+
+        window.onscroll = () => {
+            document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
+        };
+    </script>
+</body>
+</html>
